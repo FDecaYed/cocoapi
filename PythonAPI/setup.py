@@ -1,8 +1,11 @@
 from setuptools import setup, Extension
+import os
 import numpy as np
 
 # To compile and install locally run "python setup.py build_ext --inplace"
 # To install library to Python site-packages run "python setup.py build_ext install"
+
+import pybind11
 
 ext_modules = [
     Extension(
@@ -13,10 +16,12 @@ ext_modules = [
     ),
     Extension(
         'ext',
+        include_dirs=[pybind11.get_include()],
         sources=['pycocotools/ext.cpp'],
         extra_compile_args=['-O3', '-Wall', '-shared', '-std=c++11', '-fPIC'],
     )
 ]
+
 
 setup(
     name='pycocotools',
